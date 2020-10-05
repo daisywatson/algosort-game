@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="css/main.css">
+    <title>Algorithm Sorting Game</title>
+  </head>
+  <body>
+    <div id="modal">
+      <div id="modal-textbox">
+        <h1>Algorithm Sorting Game</h1>
+
+        <h2>Instructions</h2>
+        <p>Follow the algorithm-specific instructions below to sort a list in
+        the correct order. Learn how a different sorting algorithm works on each level.
+        Use your newly-learned knowledge in the final level to choose the best
+        sorting algorithm to sort the list.</p>
+
+        <h2 id="algorithm-name">Bubble Sort</h2>
+        <p id="algorithm-instructions">Swap each set of two adjacent numbers in
+          the correct order (smallest to largest) until you reach the end of the
+          list. Pass on numbers that are in the correct order. Start again from
+          the beginning of the list and repeat until all numbers in the list are
+          in the correct order. Press the 'Done' button if you are finished
+        or give up.</p>
+
+        <h3>Game Mode</h3>
+        <input type="radio" id="practice-mode" name="game-mode" value="practice" checked>
+        <label for="practice-mode">Practice</label>
+        <input type="radio" id="stopwatch-mode" name="game-mode"  value="stopwatch">
+        <label for="stopwatch-mode">Stopwatch</label>
+        <input type="radio" id="countdown" name="game-mode" value="countdown">
+        <label for="countdown">Countdown</label>
+
+        <h3>List Display Direction</h3>
+        <input type="radio" id="horizontal" name="display-direction" value="horizontal" checked>
+        <label for="horizontal">Horizontal</label>
+        <input type="radio" id="vertical" name="display-direction"  value="vertical">
+        <label for="vertical">Vertical</label>
+
+        <!--optional other option would be sorting direction: smallest <-> largest -->
+        <h3>Type of List</h3>
+        <input type="radio" id="alphabetical" name="list-type" value="alphabetical" checked>
+        <label for="alphabetical">Alphabetical</label>
+        <input type="radio" id="numerical" name="list-type" value="numerical">
+        <label for="numerical">Numerical</label>
+
+        <!--another option would be selection of # of cards -->
+        <h3>Scenario</h3>
+        <input type="radio" id="average-case" name="scenario" value="average-case" checked>
+        <label for="average-case">Average Case</label>
+        <input type="radio" id="best-case" name="scenario" value="best-case">
+        <label for="best-case">Best Case</label>
+        <input type="radio" id="worst-case" name="scenario" value="worst-case">
+        <label for="worst-case">Worst Case</label>
+
+          <div id="modal-footer">
+            <button class="modal-buttons" id="start" href="#">Start Game</button>
+          </div>
+        </div>
+      </div>
+    <!-- JS Scripts -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" charset="utf-8"></script>
+    <script src="js/app.js" charset="utf-8"></script>
+  </body>
+</html>
