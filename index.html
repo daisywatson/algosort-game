@@ -40,11 +40,11 @@
 
         <!--optional other option would be sorting direction: smallest <-> largest -->
         <h3>Type of List</h3>
-        <input type="radio" id="alphabetical" name="list-type" value="alphabetical" checked>
-        <label for="alphabetical">Alphabetical</label>
         <input type="radio" id="numerical" name="list-type" value="numerical">
         <label for="numerical">Numerical</label>
-
+        <input type="radio" id="alphabetical" name="list-type" value="alphabetical" checked>
+        <label for="alphabetical">Alphabetical</label>
+  
         <!--another option would be selection of # of cards -->
         <h3>Scenario</h3>
         <input type="radio" id="average-case" name="scenario" value="average-case" checked>
@@ -53,12 +53,18 @@
         <label for="best-case">Best Case</label>
         <input type="radio" id="worst-case" name="scenario" value="worst-case">
         <label for="worst-case">Worst Case</label>
-
           <div id="modal-footer">
             <button class="modal-buttons" id="startBtn" href="#">Start Game</button>
           </div>
         </div>
       </div>
+
+      <div class="display-info">
+        <button class="modal-buttons" id="doneBtn" href="#">Done</button>
+      </div>
+
+      <div id="card-list"></div>
+
     <!-- JS Scripts -->
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" charset="utf-8"></script>
     <script src="js/app.js" charset="utf-8"></script>

@@ -29,7 +29,7 @@ body {
   line-height: 120%;
 }
 
-#modal-footer {
+#modal-footer, .display-info {
 	text-align: right;
 }
 
@@ -40,6 +40,26 @@ body {
 	outline: none;
 	border-radius: 3px;
 	color: white;
+  font-size: 24px;
 	font-family: 'Arial';
 	cursor: pointer;
+}
+
+.square {
+  background-color: green;
+  border-style: solid;
+  border-color: black;
+  display: inline-block;
+  width: 35px; height: 35px;
+  margin: 2px;
+  color: white;
+  text-shadow:
+   -1px -1px 0 #000000,
+    1px -1px 0 #000000,
+    -1px 1px 0 #000000,
+     1px 1px 0 #000000;
+  font-size: 24px;
+  text-align: center;
+  padding-top: 7px;
+  /* cursor: pointer; */
 }
