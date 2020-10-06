@@ -45,13 +45,21 @@ body {
 	cursor: pointer;
 }
 
+.two-cards-selected {
+	border-style: solid;
+	border-color: beige;
+  /* border-width: 3px 0px 3px 0px; */
+	padding: 5px;
+  display: inline-block;
+}
+
 .square {
-  background-color: green;
   border-style: solid;
-  border-color: black;
+	border-color: black;
+  border-width: thin;
   display: inline-block;
   width: 35px; height: 35px;
-  margin: 2px;
+  margin: 10px;
   color: white;
   text-shadow:
    -1px -1px 0 #000000,
@@ -62,4 +70,13 @@ body {
   text-align: center;
   padding-top: 7px;
   /* cursor: pointer; */
+}
+
+.action-buttons {
+  /* text-align: center; */
+}
+
+.card-buttons {
+    display: block;
+    font-size: 24px;
 }

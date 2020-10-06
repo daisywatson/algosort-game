@@ -32,19 +32,19 @@
         <input type="radio" id="countdown" name="game-mode" value="countdown">
         <label for="countdown">Countdown</label>
 
-        <h3>List Display Direction</h3>
+        <!-- <h3>List Display Direction</h3>
         <input type="radio" id="horizontal" name="display-direction" value="horizontal" checked>
         <label for="horizontal">Horizontal</label>
         <input type="radio" id="vertical" name="display-direction"  value="vertical">
-        <label for="vertical">Vertical</label>
+        <label for="vertical">Vertical</label> -->
 
         <!--optional other option would be sorting direction: smallest <-> largest -->
         <h3>Type of List</h3>
-        <input type="radio" id="numerical" name="list-type" value="numerical">
+        <input type="radio" id="numerical" name="list-type" value="numerical" checked>
         <label for="numerical">Numerical</label>
-        <input type="radio" id="alphabetical" name="list-type" value="alphabetical" checked>
+        <input type="radio" id="alphabetical" name="list-type" value="alphabetical">
         <label for="alphabetical">Alphabetical</label>
-  
+
         <!--another option would be selection of # of cards -->
         <h3>Scenario</h3>
         <input type="radio" id="average-case" name="scenario" value="average-case" checked>
@@ -63,7 +63,15 @@
         <button class="modal-buttons" id="doneBtn" href="#">Done</button>
       </div>
 
-      <div id="card-list"></div>
+      <div id="card-list">
+        <!--Appending cards to the car list deletes the two cards selected div -->
+        <div class="two-cards-selected"> </div>
+      </div>
+
+      <div id="action-buttons">
+        <button class="card-buttons" id="swapBtn" href="#">Swap</button>
+        <button class="card-buttons" id="passBtn" href="#">Pass</button>
+      </div>
 
     <!-- JS Scripts -->
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" charset="utf-8"></script>
