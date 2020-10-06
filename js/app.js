@@ -91,10 +91,12 @@ const moveSelector = () => {
 const swapElements = () => {
   let currentElementID = '#' + currentElement.toString()
   let currentValue = $(currentElementID).text()
+  console.log(currentValue);
   let currentColor = $(currentElementID).css('background-color')
 
   let prevElementID = '#' + (currentElement - 1).toString()
   let prevValue = $(prevElementID).text()
+  console.log(prevValue);
   let prevColor = $(prevElementID).css('background-color')
 
   $(currentElementID).text(prevValue)
@@ -111,13 +113,6 @@ const sortingLoop = () => {
   $('#selector-2').css('border-color', 'red')
   $('#selector-2').css('border-left', '0px')
 
-  $('#swapBtn').on('click', () => {
-    swapElements();
-    moveSelector()
-  });
-  $('#passBtn').on('click', () => {
-    moveSelector()
-  });
 }
 
 
@@ -234,13 +229,31 @@ const startGame = ($modal) => {
   sortingLoop();
 }
 
+//resets all values
+const restartLevel = () => {
+  currentElement = 2;
+  listType = "";
+  scenario = "";
+  bestCaseCardValue = 1;
+  worstCaseCardValue = 15;
+}
+
 $(() => {
   const $modal = $('#modal');
   $('#startBtn').on('click', () => {
     startGame($modal)
   });
 
+  $('#swapBtn').on('click', () => {
+    swapElements();
+    moveSelector()
+  });
+  $('#passBtn').on('click', () => {
+    moveSelector()
+  });
+
   $('#doneBtn').on('click', () => {
     finishedLevelMessage($modal)
+    restartLevel();
   });
 });
