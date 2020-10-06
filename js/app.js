@@ -3,9 +3,14 @@
 let currentElement = 2;
 //Alphabetical or numerical list type:
 let listType = "";
+//Best case, worst case, average case:
 let scenario = "";
+//Best case card value when generating the cards
+let bestCaseCardValue = 1;
+//Worst case card value when generating the cards
+let worstCaseCardValue = 15;
 
-
+//check if the player sorted the list correctly from smallest to largest
 const answerChecker = () => {
   for (let i = 2; i < 16; i++) {
     let currentElementID = '#' + i.toString()
@@ -21,8 +26,6 @@ const answerChecker = () => {
       prevValue = parseInt($(prevElementID).text())
     }
 
-    console.log(currentValue);
-    console.log(prevValue);
     if (currentValue < prevValue) {
       return false;
     }
@@ -117,20 +120,50 @@ const sortingLoop = () => {
   });
 }
 
-let currentCardValue = 1;
+
 const generateBestCase = () => {
   let bestOutput = "";
 
+  //the best case for bubble sort is that everything is already sorted
   if (listType === 'numerical') {
-    bestOutput = currentCardValue
+    bestOutput = bestCaseCardValue;
+  }
+  else {
+    //Uppercase alphabetical letter starting from A
+    bestOutput = String.fromCharCode(bestCaseCardValue + 64);
+  }
+  bestCaseCardValue++;
+
+  return bestOutput;
+}
+
+const generateWorstCase = () => {
+  let worstOutput = "";
+
+  //worst case for bubble sort is that it's backwards
+  if (listType === 'numerical') {
+    worstOutput = worstCaseCardValue;
+  }
+  else {
+    //Uppercase alphabetical letter
+    worstOutput = String.fromCharCode(worstCaseCardValue + 64);
+  }
+  worstCaseCardValue--;
+
+  return worstOutput;
+}
+
+generateAverageCase = () => {
+  let randomOutput = "";
+  if (listType === 'numerical') {
+    randomOutput = Math.floor((Math.random() * 15) + 1);
   }
   else {
     //random uppercase Unicode alphabetical letter
-    bestOutput = String.fromCharCode(currentCardValue + 65);
+    randomOutput = String.fromCharCode(Math.floor((Math.random() * 25) + 65));
   }
-  currentCardValue++;
 
-  return bestOutput;
+  return randomOutput;
 }
 
 const generateRandomCard = () => {
@@ -139,14 +172,13 @@ const generateRandomCard = () => {
   if (scenario === "best-case") {
     randomOutput = generateBestCase();
   }
-  else if (scenario === "average-case") {
-    if (listType === 'numerical') {
-      randomOutput = Math.floor((Math.random() * 15) + 1);
-    }
-    else {
-      //random uppercase Unicode alphabetical letter
-      randomOutput = String.fromCharCode(Math.floor((Math.random() * 25) + 65));
-    }
+  else if (scenario === "worst-case")
+  {
+    randomOutput = generateWorstCase();
+  }
+  else {
+    //average case (random)
+    randomOutput = generateAverageCase();
   }
 
   return randomOutput;
