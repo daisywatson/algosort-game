@@ -1,66 +1,44 @@
-const generateRandomCard = (listType) => {
-  let randomOutput = "";
+//Global variables
+//current element selected by the red 2 element selector:
+let currentElement = 2;
+//Alphabetical or numerical list type:
+let listType = "";
+let scenario = "";
 
-  if (listType === 'numerical') {
-    randomOutput = Math.floor((Math.random() * 15) + 1);
-  }
-  else {
-    //random uppercase Unicode alphabetical letter
-    randomOutput = String.fromCharCode(
-      Math.floor((Math.random() * 25) + 65).toString());
+
+const answerChecker = () => {
+  for (let i = 2; i < 16; i++) {
+    let currentElementID = '#' + i.toString()
+    let prevElementID = '#' + (i - 1).toString()
+    let currentValue = "";
+    let prevValue = "";
+    if (listType === "alphabetical") {
+        currentValue = ($(currentElementID).text()).charAt(0)
+        prevValue = ($(prevElementID).text()).charAt(0)
+    }
+    else {
+      currentValue = parseInt($(currentElementID).text())
+      prevValue = parseInt($(prevElementID).text())
+    }
+
+    console.log(currentValue);
+    console.log(prevValue);
+    if (currentValue < prevValue) {
+      return false;
+    }
   }
 
-  return randomOutput;
+  return true;
 }
 
-const randomColorGenerator = () => {
-  const red =  Math.floor(Math.random() * 255);
-  const green = Math.floor(Math.random() * 255);
-  const blue = Math.floor(Math.random() * 255);
-  const color = `rgb(${red},${green}, ${blue})`;
-
-  return color;
-}
-
-const makeList = (listType) => {
-  const $cardList = $('#card-list')
-  $cardList.empty();
-
-  for(let i = 1; i < 16; i++){
-    //append a div with the two cards selected class to the card list
-    let $twoCardsSelected = $('<div>');
-    $twoCardsSelected.addClass('two-cards-selected');
-    let selectorID = 'selector-'+ i.toString();
-    $twoCardsSelected.attr('id', selectorID);
-    $('#card-list').append($twoCardsSelected);
-
-    //Append square div with random output/color to two cards selected div
-    const $square = $('<div>');
-    $square.addClass('square');
-    $square.attr('id', i);
-    $square.text(generateRandomCard(listType));
-    $twoCardsSelected.append($square);
-    $square.css('background-color', randomColorGenerator());
+const finishedLevelMessage = ($modal) => {
+  currentElement = 2;
+  let finishedMessage = "You sorted the list correctly. You have completed the level!"
+  if (!answerChecker()) {
+    finishedMessage = "You didn't sort the list correctly. You didn't complete the level."
   }
-}
-
-const startGame = ($modal) => {
-  //Hide the instructions
-  $modal.hide();
-
-  let gameMode = $("input[name='game-mode']:checked").val();
-  console.log(gameMode)
-
-  let scenario = $("input[name='scenario']:checked").val();
-  console.log(scenario)
-
-  // let displayDirection = $("input[name='display-direction']:checked").val();
-  // console.log(displayDirection)
-  let listType = $("input[name='list-type']:checked").val();
-  console.log(listType)
-  makeList(listType)
-
-  sortingLoop();
+  alert(finishedMessage)
+  $modal.show()
 }
 
 const selectorWrapAround = () => {
@@ -79,7 +57,6 @@ const selectorWrapAround = () => {
 }
 
 //Move red selector to the next two elements by turning on/off the borders
-let currentElement = 2;
 const moveSelector = () => {
   //wrap around and start at the beginning again
   if (currentElement === 15) {
@@ -108,10 +85,22 @@ const moveSelector = () => {
   }
 }
 
+const swapElements = () => {
+  let currentElementID = '#' + currentElement.toString()
+  let currentValue = $(currentElementID).text()
+  let currentColor = $(currentElementID).css('background-color')
+
+  let prevElementID = '#' + (currentElement - 1).toString()
+  let prevValue = $(prevElementID).text()
+  let prevColor = $(prevElementID).css('background-color')
+
+  $(currentElementID).text(prevValue)
+  $(currentElementID).css('background-color', prevColor)
+  $(prevElementID).text(currentValue)
+  $(prevElementID).css('background-color', currentColor)
+}
 
 const sortingLoop = () => {
-  console.log("sorting loop begins")
-
   //turn on border for 1st element, turn off right border
   $('#selector-1').css('border-color', 'red')
   $('#selector-1').css('border-right', '0px')
@@ -128,26 +117,98 @@ const sortingLoop = () => {
   });
 }
 
-const swapElements = () => {
-  let currentElementID = '#' + currentElement.toString()
-  let currentValue = $(currentElementID).text()
-  let currentColor = $(currentElementID).css('background-color')
-  console.log(currentColor)
-  let prevElementID = '#' +(currentElement - 1).toString()
-  let prevValue = $(prevElementID).text()
-  let prevColor = $(prevElementID).css('background-color')
-  console.log(prevValue)
+let currentCardValue = 1;
+const generateBestCase = () => {
+  let bestOutput = "";
 
-  $(currentElementID).text(prevValue)
-  $(currentElementID).css('background-color', prevColor)
-  $(prevElementID).text(currentValue)
-  $(prevElementID).css('background-color', currentColor)
+  if (listType === 'numerical') {
+    bestOutput = currentCardValue
+  }
+  else {
+    //random uppercase Unicode alphabetical letter
+    bestOutput = String.fromCharCode(currentCardValue + 65);
+  }
+  currentCardValue++;
+
+  return bestOutput;
 }
 
+const generateRandomCard = () => {
+  let randomOutput = "";
+
+  if (scenario === "best-case") {
+    randomOutput = generateBestCase();
+  }
+  else if (scenario === "average-case") {
+    if (listType === 'numerical') {
+      randomOutput = Math.floor((Math.random() * 15) + 1);
+    }
+    else {
+      //random uppercase Unicode alphabetical letter
+      randomOutput = String.fromCharCode(Math.floor((Math.random() * 25) + 65));
+    }
+  }
+
+  return randomOutput;
+}
+
+const randomColorGenerator = () => {
+  const red =  Math.floor(Math.random() * 255);
+  const green = Math.floor(Math.random() * 255);
+  const blue = Math.floor(Math.random() * 255);
+  const color = `rgb(${red},${green}, ${blue})`;
+
+  return color;
+}
+
+const makeList = () => {
+  const $cardList = $('#card-list')
+  $cardList.empty();
+
+  for(let i = 1; i < 16; i++){
+    //append a div with the two cards selected class to the card list
+    let $twoCardsSelected = $('<div>');
+    $twoCardsSelected.addClass('two-cards-selected');
+    let selectorID = 'selector-'+ i.toString();
+    $twoCardsSelected.attr('id', selectorID);
+    $('#card-list').append($twoCardsSelected);
+
+    //Append square div with random output/color to two cards selected div
+    const $square = $('<div>');
+    $square.addClass('square');
+    $square.attr('id', i);
+    $square.text(generateRandomCard());
+    $twoCardsSelected.append($square);
+    $square.css('background-color', randomColorGenerator());
+  }
+}
+
+const startGame = ($modal) => {
+  //Hide the instructions
+  $modal.hide();
+
+  let gameMode = $("input[name='game-mode']:checked").val();
+  console.log(gameMode)
+
+  scenario = $("input[name='scenario']:checked").val();
+  console.log(scenario)
+
+  // let displayDirection = $("input[name='display-direction']:checked").val();
+  // console.log(displayDirection)
+  listType = $("input[name='list-type']:checked").val();
+  console.log(listType)
+  makeList()
+
+  sortingLoop();
+}
 
 $(() => {
   const $modal = $('#modal');
   $('#startBtn').on('click', () => {
     startGame($modal)
+  });
+
+  $('#doneBtn').on('click', () => {
+    finishedLevelMessage($modal)
   });
 });
