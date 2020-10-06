@@ -50,14 +50,15 @@ const startGame = ($modal) => {
 
   let gameMode = $("input[name='game-mode']:checked").val();
   console.log(gameMode)
+
+  let scenario = $("input[name='scenario']:checked").val();
+  console.log(scenario)
+
   // let displayDirection = $("input[name='display-direction']:checked").val();
   // console.log(displayDirection)
   let listType = $("input[name='list-type']:checked").val();
   console.log(listType)
   makeList(listType)
-
-  let scenario = $("input[name='scenario']:checked").val();
-  console.log(scenario)
 
   sortingLoop();
 }
@@ -91,14 +92,16 @@ const moveSelector = () => {
 
     let firstElementID = '#selector-' + currentElement.toString()
     let secondElementID = '#selector-' + (currentElement + 1).toString()
-    //turn on border, including left border, for 1st element, turn off right border
+    //turn on border, including left border, for 1st element
     $(firstElementID).css('border-left', '3px')
     $(firstElementID).css('border-left-style', 'solid')
     $(firstElementID).css('border-color', 'red')
+    //turn off right border
     $(firstElementID).css('border-right', '0px')
-    //turn on border, including right border, for 2nd element, turn off left border
+    //turn on border, including right border, for 2nd element
     $(secondElementID).css('border-right', '3px')
     $(secondElementID).css('border-right-style', 'solid')
+    //turn off left border
     $(secondElementID).css('border-color', 'red')
     $(secondElementID).css('border-left', '0px')
     currentElement++;
@@ -117,11 +120,28 @@ const sortingLoop = () => {
   $('#selector-2').css('border-left', '0px')
 
   $('#swapBtn').on('click', () => {
+    swapElements();
     moveSelector()
   });
   $('#passBtn').on('click', () => {
     moveSelector()
   });
+}
+
+const swapElements = () => {
+  let currentElementID = '#' + currentElement.toString()
+  let currentValue = $(currentElementID).text()
+  let currentColor = $(currentElementID).css('background-color')
+  console.log(currentColor)
+  let prevElementID = '#' +(currentElement - 1).toString()
+  let prevValue = $(prevElementID).text()
+  let prevColor = $(prevElementID).css('background-color')
+  console.log(prevValue)
+
+  $(currentElementID).text(prevValue)
+  $(currentElementID).css('background-color', prevColor)
+  $(prevElementID).text(currentValue)
+  $(prevElementID).css('background-color', currentColor)
 }
 
 
