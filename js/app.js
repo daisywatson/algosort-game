@@ -9,6 +9,26 @@ let scenario = "";
 let bestCaseCardValue = 1;
 //Worst case card value when generating the cards
 let worstCaseCardValue = 15;
+//ID for the stopwatch
+let intervalID;
+//Number of seconds for the stopwatch
+let numSeconds = 1;
+//Number of seconds for the countdown
+let numSecondsLeft = 60;
+
+//resets all values
+const restartLevel = () => {
+  currentElement = 2;
+  listType = "";
+  scenario = "";
+  bestCaseCardValue = 1;
+  worstCaseCardValue = 15;
+  numSeconds = 1;
+  numSecondsLeft = 60;
+
+  $('#timer').text("");
+  clearInterval(intervalID);
+}
 
 //check if the player sorted the list correctly from smallest to largest
 const answerChecker = () => {
@@ -115,7 +135,6 @@ const sortingLoop = () => {
 
 }
 
-
 const generateBestCase = () => {
   let bestOutput = "";
 
@@ -148,7 +167,7 @@ const generateWorstCase = () => {
   return worstOutput;
 }
 
-generateAverageCase = () => {
+const generateAverageCase = () => {
   let randomOutput = "";
   if (listType === 'numerical') {
     randomOutput = Math.floor((Math.random() * 15) + 1);
@@ -210,11 +229,45 @@ const makeList = () => {
   }
 }
 
+const displayStopwatchTime = () => {
+  $('#timer').text(numSeconds + " secs.")
+  numSeconds++;
+}
+
+const startStopwatch = () => {
+  $('#timer').text("0 secs.")
+  intervalID = setInterval(displayStopwatchTime, 1000);
+}
+
+const displayCountdownTime = () => {
+  $('#timer').text(numSecondsLeft + " secs.")
+  numSecondsLeft--;
+}
+
+const timesUp = () => {
+    alert("Times up!")
+    const $modal = $('#modal');
+    finishedLevelMessage($modal)
+    restartLevel();
+}
+
+const startCountdown = () => {
+    $('#timer').text("60 secs.")
+    intervalID = setInterval(displayCountdownTime, 1000);
+    setTimeout(timesUp, 62000);
+}
+
 const startGame = ($modal) => {
   //Hide the instructions
   $modal.hide();
 
   let gameMode = $("input[name='game-mode']:checked").val();
+  if (gameMode === 'stopwatch') {
+    startStopwatch();
+  }
+  else if (gameMode === 'countdown') {
+    startCountdown();
+  }
   console.log(gameMode)
 
   scenario = $("input[name='scenario']:checked").val();
@@ -227,15 +280,6 @@ const startGame = ($modal) => {
   makeList()
 
   sortingLoop();
-}
-
-//resets all values
-const restartLevel = () => {
-  currentElement = 2;
-  listType = "";
-  scenario = "";
-  bestCaseCardValue = 1;
-  worstCaseCardValue = 15;
 }
 
 $(() => {
