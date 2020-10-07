@@ -45,6 +45,10 @@ body {
 	cursor: pointer;
 }
 
+#quicksort-instructions {
+  display: none;
+}
+
 .two-cards-selected {
 	border-style: solid;
 	border-color: beige;

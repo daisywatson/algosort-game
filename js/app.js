@@ -15,6 +15,8 @@ let intervalID;
 let numSeconds = 1;
 //Number of seconds for the countdown
 let numSecondsLeft = 60;
+//which algorithm level the user will be playing:
+let algorithm = "bubble-sort"
 
 //resets all values
 const restartLevel = () => {
@@ -111,12 +113,12 @@ const moveSelector = () => {
 const swapElements = () => {
   let currentElementID = '#' + currentElement.toString()
   let currentValue = $(currentElementID).text()
-  console.log(currentValue);
+  //console.log(currentValue);
   let currentColor = $(currentElementID).css('background-color')
 
   let prevElementID = '#' + (currentElement - 1).toString()
   let prevValue = $(prevElementID).text()
-  console.log(prevValue);
+  //console.log(prevValue);
   let prevColor = $(prevElementID).css('background-color')
 
   $(currentElementID).text(prevValue)
@@ -125,14 +127,14 @@ const swapElements = () => {
   $(prevElementID).css('background-color', currentColor)
 }
 
-const sortingLoop = () => {
+//select the first two cards in the card list
+const startSelection = () => {
   //turn on border for 1st element, turn off right border
   $('#selector-1').css('border-color', 'red')
   $('#selector-1').css('border-right', '0px')
   //turn on border for 2nd element, turn off left border
   $('#selector-2').css('border-color', 'red')
   $('#selector-2').css('border-left', '0px')
-
 }
 
 const generateBestCase = () => {
@@ -257,10 +259,8 @@ const startCountdown = () => {
     setTimeout(timesUp, 62000);
 }
 
-const startGame = ($modal) => {
-  //Hide the instructions
-  $modal.hide();
-
+//get user input from radio buttons
+const getUserRadioInput = () => {
   let gameMode = $("input[name='game-mode']:checked").val();
   if (gameMode === 'stopwatch') {
     startStopwatch();
@@ -277,12 +277,38 @@ const startGame = ($modal) => {
   // console.log(displayDirection)
   listType = $("input[name='list-type']:checked").val();
   console.log(listType)
+}
+
+const startGame = ($modal) => {
+  //Hide the instructions
+  $modal.hide();
+
+  getUserRadioInput();
+
+  //display all the cards
   makeList()
 
-  sortingLoop();
+  //select the first two cards
+  startSelection();
 }
 
 $(() => {
+  // algorithm = $("input[name='algorithm-level']:checked").val();
+  // let algorithmID = '#' + algorithm;
+  $('#bubble-sort').on('click', () => {
+    algorithm = $("input[name='algorithm-level']:checked").val();
+    console.log(algorithm)
+    $('#quicksort-instructions').hide()
+    $('#bubblesort-instructions').show()
+  });
+
+  $('#quicksort').on('click', () => {
+    algorithm = $("input[name='algorithm-level']:checked").val();
+    console.log(algorithm)
+    $('#bubblesort-instructions').hide()
+    $('#quicksort-instructions').show()
+  });
+
   const $modal = $('#modal');
   $('#startBtn').on('click', () => {
     startGame($modal)
