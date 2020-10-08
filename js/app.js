@@ -48,6 +48,9 @@ const answerChecker = () => {
       prevValue = parseInt($(prevElementID).text())
     }
 
+    console.log('current value: ' + currentValue);
+    console.log('prev value: ' + prevValue);
+
     if (currentValue < prevValue) {
       return false;
     }
@@ -182,7 +185,7 @@ const generateAverageCase = () => {
   return randomOutput;
 }
 
-const generateRandomCard = () => {
+const generateCard = () => {
   let randomOutput = "";
 
   if (scenario === "best-case") {
@@ -209,26 +212,71 @@ const randomColorGenerator = () => {
   return color;
 }
 
+//append a div with the two cards selected class to the card list
+const addTwoCardsSelector = (numInForLoop) => {
+  let $twoCardsSelected = $('<div>');
+  $twoCardsSelected.addClass('two-cards-selected');
+  let selectorID = 'selector-'+ numInForLoop.toString();
+  $twoCardsSelected.attr('id', selectorID);
+  $('#card-list').append($twoCardsSelected);
+
+  addCardToBubbleSortList(numInForLoop, $twoCardsSelected)
+}
+
+//Append square div with random output/color to two cards selected div
+const addCardToBubbleSortList = (numInForLoop, $twoCardsSelected) => {
+  const $square = $('<li>');
+  $square.addClass('square');
+  $square.attr('id', numInForLoop);
+  $square.text(generateCard());
+  $twoCardsSelected.append($square);
+  $square.css('background-color', randomColorGenerator());
+}
+
+const addCardToFreeSortList = (numInForLoop) => {
+  const $square = $('<li>');
+  $square.addClass('square');
+  $square.attr('id', numInForLoop.toString());
+  $square.text(generateCard());
+  $('#card-list').append($square);
+  $square.css('background-color', randomColorGenerator());
+}
+
 const makeList = () => {
   const $cardList = $('#card-list')
   $cardList.empty();
 
   for(let i = 1; i < 16; i++){
-    //append a div with the two cards selected class to the card list
-    let $twoCardsSelected = $('<div>');
-    $twoCardsSelected.addClass('two-cards-selected');
-    let selectorID = 'selector-'+ i.toString();
-    $twoCardsSelected.attr('id', selectorID);
-    $('#card-list').append($twoCardsSelected);
-
-    //Append square div with random output/color to two cards selected div
-    const $square = $('<div>');
-    $square.addClass('square');
-    $square.attr('id', i);
-    $square.text(generateRandomCard());
-    $twoCardsSelected.append($square);
-    $square.css('background-color', randomColorGenerator());
+    addTwoCardsSelector(i);
   }
+}
+
+const makeFreeSortList = () => {
+  const $cardList = $('#card-list')
+  $cardList.empty();
+
+  for(let i = 1; i < 16; i++){
+    addCardToFreeSortList(i);
+  }
+}
+
+const startBubbleSort = () => {
+  console.log('start bubble sort')
+  //display all the cards
+  makeList()
+
+  //select the first two cards
+  startSelection();
+}
+
+const startQuicksort = () => {
+
+}
+
+const startFreeSort = () => {
+  makeFreeSortList();
+
+  $('#card-list').sortable();
 }
 
 const displayStopwatchTime = () => {
@@ -285,11 +333,16 @@ const startGame = ($modal) => {
 
   getUserRadioInput();
 
-  //display all the cards
-  makeList()
-
-  //select the first two cards
-  startSelection();
+  if (algorithm === 'bubble-sort')
+  {
+    startBubbleSort();
+  }
+  else if (algorithm === 'quicksort') {
+    startQuicksort();
+  }
+  else if (algorithm === 'freesort') {
+    startFreeSort();
+  }
 }
 
 $(() => {
@@ -297,16 +350,32 @@ $(() => {
   // let algorithmID = '#' + algorithm;
   $('#bubble-sort').on('click', () => {
     algorithm = $("input[name='algorithm-level']:checked").val();
-    console.log(algorithm)
     $('#quicksort-instructions').hide()
+    $('#freesort-instructions').hide()
     $('#bubblesort-instructions').show()
+    $('#algorithm-name').text('Bubble Sort')
+
+    $('.card-buttons').css('display', 'block')
   });
 
   $('#quicksort').on('click', () => {
     algorithm = $("input[name='algorithm-level']:checked").val();
-    console.log(algorithm)
     $('#bubblesort-instructions').hide()
+    $('#freesort-instructions').hide()
     $('#quicksort-instructions').show()
+    $('#algorithm-name').text('Quicksort')
+
+    $('.card-buttons').css('display', 'none')
+  });
+
+  $('#freesort').on('click', () => {
+    algorithm = $("input[name='algorithm-level']:checked").val();
+    $('#bubblesort-instructions').hide()
+    $('#quicksort-instructions').hide()
+    $('#freesort-instructions').show()
+    $('#algorithm-name').text('Free Sort')
+
+    $('.card-buttons').css('display', 'none')
   });
 
   const $modal = $('#modal');

@@ -49,6 +49,10 @@ body {
   display: none;
 }
 
+#freesort-instructions {
+  display: none;
+}
+
 .two-cards-selected {
 	border-style: solid;
 	border-color: beige;
@@ -74,10 +78,6 @@ body {
   text-align: center;
   padding-top: 7px;
   /* cursor: pointer; */
-}
-
-.action-buttons {
-  /* text-align: center; */
 }
 
 .card-buttons {

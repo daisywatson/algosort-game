@@ -17,10 +17,15 @@
         sorting algorithm to sort the list.</p>
 
         <h2 id="algorithm-name">Bubble Sort</h2>
-        <input type="radio" id="bubble-sort" name="algorithm-level" value="bubble-sort" checked>
+        <input type="radio" id="bubble-sort" name="algorithm-level"
+        value="bubble-sort" autocomplete="off" checked>
         <label for="bubble-sort">Bubble Sort</label>
-        <input type="radio" id="quicksort" name="algorithm-level" value="quicksort">
+        <input type="radio" id="quicksort" name="algorithm-level"
+        value="quicksort" autocomplete="off">
         <label for="quicksort">Quicksort</label>
+        <input type="radio" id="freesort" name="algorithm-level"
+        value="freesort" autocomplete="off">
+        <label for="freesort">Free Sort</label>
         <p id="bubblesort-instructions">Swap each set of two adjacent numbers in
           the correct order (smallest to largest) until you reach the end of the
           list. Pass on numbers that are in the correct order. Start again from
@@ -28,35 +33,37 @@
           in the correct order. Press the 'Done' button if you are finished
         or give up.</p>
         <p id="quicksort-instructions">Pick a card as a pivot.</p>
-
+        <p id="freesort-instructions">In this final level, use your newly-learned
+          knowledge of algorithms to sort the list of cards. You're free to choose
+          whatever algorithm you wish to use.</p>
         <h3>Game Mode</h3>
-        <input type="radio" id="practice-mode" name="game-mode" value="practice" checked>
+        <input type="radio" id="practice-mode" name="game-mode" value="practice"
+        autocomplete="off" checked>
         <label for="practice-mode">Practice</label>
-        <input type="radio" id="stopwatch-mode" name="game-mode"  value="stopwatch">
+        <input type="radio" id="stopwatch-mode" name="game-mode"
+        value="stopwatch" autocomplete="off">
         <label for="stopwatch-mode">Stopwatch</label>
-        <input type="radio" id="countdown" name="game-mode" value="countdown">
+        <input type="radio" id="countdown" name="game-mode" value="countdown"
+        autocomplete="off">
         <label for="countdown">Countdown</label>
 
-        <!-- <h3>List Display Direction</h3>
-        <input type="radio" id="horizontal" name="display-direction" value="horizontal" checked>
-        <label for="horizontal">Horizontal</label>
-        <input type="radio" id="vertical" name="display-direction"  value="vertical">
-        <label for="vertical">Vertical</label> -->
-
-        <!--optional other option would be sorting direction: smallest <-> largest -->
         <h3>Type of List</h3>
-        <input type="radio" id="numerical" name="list-type" value="numerical" checked>
+        <input type="radio" id="numerical" name="list-type" value="numerical"
+        autocomplete="off" checked>
         <label for="numerical">Numerical</label>
-        <input type="radio" id="alphabetical" name="list-type" value="alphabetical">
+        <input type="radio" id="alphabetical" name="list-type"
+        value="alphabetical" autocomplete="off" >
         <label for="alphabetical">Alphabetical</label>
 
-        <!--another option would be selection of # of cards -->
         <h3>Scenario</h3>
-        <input type="radio" id="average-case" name="scenario" value="average-case" checked>
+        <input type="radio" id="average-case" name="scenario"
+        value="average-case" autocomplete="off" checked>
         <label for="average-case">Average Case</label>
-        <input type="radio" id="best-case" name="scenario" value="best-case">
+        <input type="radio" id="best-case" name="scenario" value="best-case"
+        autocomplete="off">
         <label for="best-case">Best Case</label>
-        <input type="radio" id="worst-case" name="scenario" value="worst-case">
+        <input type="radio" id="worst-case" name="scenario" value="worst-case"
+        autocomplete="off">
         <label for="worst-case">Worst Case</label>
           <div id="modal-footer">
             <button class="modal-buttons" id="startBtn" href="#">Start Game</button>
@@ -69,10 +76,10 @@
         <button class="modal-buttons" id="doneBtn" href="#">Done</button>
       </div>
 
-      <div id="card-list">
+      <ul id="card-list">
         <!--Appending cards to the car list deletes the two cards selected div -->
         <div class="two-cards-selected"> </div>
-      </div>
+      </ul>
 
       <div id="action-buttons">
         <button class="card-buttons" id="swapBtn" href="#">Swap</button>
@@ -81,6 +88,9 @@
 
     <!-- JS Scripts -->
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" charset="utf-8"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+          integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
+          crossorigin="anonymous"></script>
     <script src="js/app.js" charset="utf-8"></script>
   </body>
 </html>
