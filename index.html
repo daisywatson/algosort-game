@@ -32,10 +32,18 @@
           the beginning of the list and repeat until all numbers in the list are
           in the correct order. Press the 'Done' button if you are finished
         or give up.</p>
-        <p id="quicksort-instructions">Pick a card as a pivot.</p>
+        <p id="quicksort-instructions"> Click the 'Select Pivot' button and then
+          click a card to select it as a pivot. Sort cards from smallest to
+          largest by moving cards smaller than the pivot to the left of it and
+          cards bigger than it to the right of it. When you are finished sorting
+          cards around a pivot, press the 'Deselect' button. Repeat selecting a
+          in each unsorted partition and sorting cards around it until you have
+          sorted the entire card list in the correct order. Press the 'Done'
+          button if you are finished or give up.</p>
         <p id="freesort-instructions">In this final level, use your newly-learned
-          knowledge of algorithms to sort the list of cards. You're free to choose
-          whatever algorithm you wish to use.</p>
+          knowledge of algorithms to sort the list of cards from smallest to
+          largest. You're free to choose whatever algorithm you wish to use.
+          Press the 'Done' button if you are finished or give up.</p>
         <h3>Game Mode</h3>
         <input type="radio" id="practice-mode" name="game-mode" value="practice"
         autocomplete="off" checked>
@@ -82,8 +90,14 @@
       </ul>
 
       <div id="action-buttons">
-        <button class="card-buttons" id="swapBtn" href="#">Swap</button>
-        <button class="card-buttons" id="passBtn" href="#">Pass</button>
+        <div id="bubble-sort-buttons">
+          <button class="card-buttons" id="swapBtn" href="#">Swap</button>
+          <button class="card-buttons" id="passBtn" href="#">Pass</button>
+        </div>
+        <div id="quicksort-buttons">
+          <button class="card-buttons" id="pivotBtn" href="#">Select Pivot</button>
+          <button class="card-buttons" id="deselectBtn" href="#">Deselect Pivot</button>
+        </div>
       </div>
 
     <!-- JS Scripts -->

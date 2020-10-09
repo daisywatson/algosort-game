@@ -32,24 +32,34 @@ const restartLevel = () => {
   clearInterval(intervalID);
 }
 
+
 //check if the player sorted the list correctly from smallest to largest
 const answerChecker = () => {
-  for (let i = 2; i < 16; i++) {
-    let currentElementID = '#' + i.toString()
-    let prevElementID = '#' + (i - 1).toString()
+  const cardArr = [];
+  $( "li" ).each(function() {
+    cardArr.push($(this).text());
+  });
+
+  for (let i = 1; i < 15; i++) {
+    // let currentElementID = '#' + i.toString()
+    // let prevElementID = '#' + (i - 1).toString()
     let currentValue = "";
     let prevValue = "";
     if (listType === "alphabetical") {
-        currentValue = ($(currentElementID).text()).charAt(0)
-        prevValue = ($(prevElementID).text()).charAt(0)
+        // currentValue = ($(currentElementID).text()).charAt(0)
+        // prevValue = ($(prevElementID).text()).charAt(0)
+        currentValue = cardArr[i].charAt(0)
+        prevValue = cardArr[i-1].charAt(0)
     }
     else {
-      currentValue = parseInt($(currentElementID).text())
-      prevValue = parseInt($(prevElementID).text())
+      // currentValue = parseInt($(currentElementID).text())
+      // prevValue = parseInt($(prevElementID).text())
+      currentValue = parseInt(cardArr[i])
+      prevValue = parseInt(cardArr[i-1])
     }
 
-    console.log('current value: ' + currentValue);
-    console.log('prev value: ' + prevValue);
+    // console.log('current value: ' + currentValue);
+    // console.log('prev value: ' + prevValue);
 
     if (currentValue < prevValue) {
       return false;
@@ -242,6 +252,21 @@ const addCardToFreeSortList = (numInForLoop) => {
   $square.css('background-color', randomColorGenerator());
 }
 
+const addCardToQuicksortList = (numInForLoop) => {
+  const $square = $('<li>');
+  $square.addClass('square');
+  let squareID = numInForLoop.toString();
+  $square.attr('id', squareID);
+  $square.text(generateCard());
+  $('#card-list').append($square);
+  $square.css('background-color', randomColorGenerator());
+
+  // $('#' + squareID).on('click', () => {
+  //   $('#' + squareID).addClass('pivot');
+  //   $('#' + squareID).toggleClass('pivot-style')
+  // });
+}
+
 const makeList = () => {
   const $cardList = $('#card-list')
   $cardList.empty();
@@ -260,8 +285,17 @@ const makeFreeSortList = () => {
   }
 }
 
+const makeQuicksortList = () => {
+  const $cardList = $('#card-list')
+  $cardList.empty();
+
+  for(let i = 1; i < 16; i++){
+    addCardToQuicksortList(i);
+  }
+}
+
 const startBubbleSort = () => {
-  console.log('start bubble sort')
+  // console.log('start bubble sort')
   //display all the cards
   makeList()
 
@@ -270,13 +304,16 @@ const startBubbleSort = () => {
 }
 
 const startQuicksort = () => {
+  makeQuicksortList();
 
+  $('#card-list').sortable({cursor: "move"});
+  $('#deselectBtn').hide();
 }
 
 const startFreeSort = () => {
   makeFreeSortList();
 
-  $('#card-list').sortable();
+  $('#card-list').sortable({cursor: "move"});
 }
 
 const displayStopwatchTime = () => {
@@ -316,15 +353,15 @@ const getUserRadioInput = () => {
   else if (gameMode === 'countdown') {
     startCountdown();
   }
-  console.log(gameMode)
+  // console.log(gameMode)
 
   scenario = $("input[name='scenario']:checked").val();
-  console.log(scenario)
+  // console.log(scenario)
 
   // let displayDirection = $("input[name='display-direction']:checked").val();
   // console.log(displayDirection)
   listType = $("input[name='list-type']:checked").val();
-  console.log(listType)
+  // console.log(listType)
 }
 
 const startGame = ($modal) => {
@@ -345,37 +382,71 @@ const startGame = ($modal) => {
   }
 }
 
+const bubbleSortClick = () => {
+  algorithm = $("input[name='algorithm-level']:checked").val();
+  $('#quicksort-instructions').hide()
+  $('#freesort-instructions').hide()
+  $('#bubblesort-instructions').show()
+  $('#algorithm-name').text('Bubble Sort')
+
+  $('#bubble-sort-buttons').css('display', 'block')
+  $('#quicksort-buttons').css('display', 'none')
+}
+
+const quicksortClick = () => {
+  algorithm = $("input[name='algorithm-level']:checked").val();
+  $('#bubblesort-instructions').hide()
+  $('#freesort-instructions').hide()
+  $('#quicksort-instructions').show()
+  $('#algorithm-name').text('Quicksort')
+
+  $('#bubble-sort-buttons').css('display', 'none')
+  $('#quicksort-buttons').css('display', 'block')
+}
+
+const freesortClick = () => {
+  algorithm = $("input[name='algorithm-level']:checked").val();
+  $('#bubblesort-instructions').hide()
+  $('#quicksort-instructions').hide()
+  $('#freesort-instructions').show()
+  $('#algorithm-name').text('Free Sort')
+
+  $('#bubble-sort-buttons').css('display', 'none')
+  $('#quicksort-buttons').css('display', 'none')
+}
+
+const addPivotListeners = () => {
+  for(let i = 1; i < 16; i++){
+    $('#' + i.toString()).on('click', () => {
+      $('#' + i.toString()).addClass('pivot');
+      $('#' + i.toString()).addClass('pivot-style')
+      //Make the pivot unsortable
+      $( "#card-list" ).sortable({cancel: '.pivot'});
+
+      removePivotListeners();
+    });
+  }
+}
+
+const removePivotListeners = () => {
+  for(let i = 1; i < 16; i++){
+    $('#' + i.toString()).off();
+  }
+}
+
 $(() => {
   // algorithm = $("input[name='algorithm-level']:checked").val();
   // let algorithmID = '#' + algorithm;
   $('#bubble-sort').on('click', () => {
-    algorithm = $("input[name='algorithm-level']:checked").val();
-    $('#quicksort-instructions').hide()
-    $('#freesort-instructions').hide()
-    $('#bubblesort-instructions').show()
-    $('#algorithm-name').text('Bubble Sort')
-
-    $('.card-buttons').css('display', 'block')
+    bubbleSortClick();
   });
 
   $('#quicksort').on('click', () => {
-    algorithm = $("input[name='algorithm-level']:checked").val();
-    $('#bubblesort-instructions').hide()
-    $('#freesort-instructions').hide()
-    $('#quicksort-instructions').show()
-    $('#algorithm-name').text('Quicksort')
-
-    $('.card-buttons').css('display', 'none')
+    quicksortClick();
   });
 
   $('#freesort').on('click', () => {
-    algorithm = $("input[name='algorithm-level']:checked").val();
-    $('#bubblesort-instructions').hide()
-    $('#quicksort-instructions').hide()
-    $('#freesort-instructions').show()
-    $('#algorithm-name').text('Free Sort')
-
-    $('.card-buttons').css('display', 'none')
+    freesortClick();
   });
 
   const $modal = $('#modal');
@@ -394,5 +465,25 @@ $(() => {
   $('#doneBtn').on('click', () => {
     finishedLevelMessage($modal)
     restartLevel();
+  });
+
+  $('#pivotBtn').on('click', () => {
+    //Make sortable list unsortable
+    //$( "#card-list" ).sortable({cancel: '.pivot'});
+    // $( "#card-list" ).sortable('disable');
+
+    addPivotListeners();
+
+    $('#pivotBtn').hide();
+    $('#deselectBtn').show();
+  });
+
+  $('#deselectBtn').on('click', () => {
+    // $( "#card-list" ).sortable('enable');
+    $("#card-list").find('.pivot').removeClass('pivot');
+    $("#card-list").find('.pivot-style').removeClass('pivot-style');
+
+    $('#pivotBtn').show();
+    $('#deselectBtn').hide();
   });
 });

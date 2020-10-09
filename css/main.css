@@ -81,6 +81,18 @@ body {
 }
 
 .card-buttons {
-    display: block;
-    font-size: 24px;
+  display: block;
+  font-size: 24px;
+}
+
+#quicksort-buttons {
+  display: none;
+}
+
+.pivot-style {
+  border-style: solid;
+  border-color: red;
+  border-radius: 3px;
+  border-width: thick;
+  padding: 10px;
 }
