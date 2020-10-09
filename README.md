@@ -53,4 +53,4 @@ Code needs to be organized into classes or other files.
 4. If the user chose countdown mode, an alert will appear when the time is up. The user can press the ok button. Another alert will appear indicating whether or not the user sorted the list correctly. The user can press ok again and return to the title screen. 
 
 ## Wireframes
-[title-screen]: https://raw.githubusercontent.com/daisywatson/algosort-game/main/Wireframes/title-screen.jpg 
+[title]: Wireframes/title-screen.jpg
