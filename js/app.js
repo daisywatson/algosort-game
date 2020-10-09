@@ -31,6 +31,7 @@ const restartLevel = () => {
   numSecondsLeft = 60;
 
   $('#timer').text("");
+  $('#pivot-info').text('')
   clearInterval(intervalID);
   clearTimeout(myCountdown);
 }
