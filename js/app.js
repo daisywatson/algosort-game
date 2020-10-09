@@ -11,6 +11,8 @@ let bestCaseCardValue = 1;
 let worstCaseCardValue = 15;
 //ID for the stopwatch
 let intervalID;
+//variable for the countdown
+let myCountdown;
 //Number of seconds for the stopwatch
 let numSeconds = 1;
 //Number of seconds for the countdown
@@ -30,6 +32,7 @@ const restartLevel = () => {
 
   $('#timer').text("");
   clearInterval(intervalID);
+  clearTimeout(myCountdown);
 }
 
 
@@ -154,14 +157,20 @@ const generateBestCase = () => {
   let bestOutput = "";
 
   //the best case for bubble sort is that everything is already sorted
-  if (listType === 'numerical') {
-    bestOutput = bestCaseCardValue;
+  //for quicksort, it's if the pivots picked are very balanced
+  if (algorithm === 'quicksort') {
+    bestOutput = generateAverageCase();
   }
   else {
-    //Uppercase alphabetical letter starting from A
-    bestOutput = String.fromCharCode(bestCaseCardValue + 64);
+    if (listType === 'numerical') {
+      bestOutput = bestCaseCardValue;
+    }
+    else {
+      //Uppercase alphabetical letter starting from A
+      bestOutput = String.fromCharCode(bestCaseCardValue + 64);
+    }
+    bestCaseCardValue++;
   }
-  bestCaseCardValue++;
 
   return bestOutput;
 }
@@ -170,6 +179,9 @@ const generateWorstCase = () => {
   let worstOutput = "";
 
   //worst case for bubble sort is that it's backwards
+  //for quicksort, it's if the pivot picked is very unbalanced: for this
+  //case, it's assumed that the user keeps picking the rightmost element for
+  //the pivot
   if (listType === 'numerical') {
     worstOutput = worstCaseCardValue;
   }
@@ -200,14 +212,23 @@ const generateCard = () => {
 
   if (scenario === "best-case") {
     randomOutput = generateBestCase();
+    if (algorithm === 'quicksort') {
+      $('#pivot-info').text('Pick median pivots')
+    }
   }
   else if (scenario === "worst-case")
   {
     randomOutput = generateWorstCase();
+    if (algorithm === 'quicksort') {
+      $('#pivot-info').text('Pick end pivots')
+    }
   }
   else {
     //average case (random)
     randomOutput = generateAverageCase();
+    if (algorithm === 'quicksort') {
+      $('#pivot-info').text('Pick random pivots')
+    }
   }
 
   return randomOutput;
@@ -341,7 +362,7 @@ const timesUp = () => {
 const startCountdown = () => {
     $('#timer').text("60 secs.")
     intervalID = setInterval(displayCountdownTime, 1000);
-    setTimeout(timesUp, 62000);
+    myCountdown = setTimeout(timesUp, 62000);
 }
 
 //get user input from radio buttons
