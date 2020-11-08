@@ -2,6 +2,9 @@
 A game for learning how sorting algorithms work. 
 I made this game to review sorting algorithms and to help other people learn how sorting algorithms work in concept.
 
+### Live version
+https://daisywatson.github.io/algosort-game/
+
 ### Technologies Used
 jQuery, jQuery UI, HTML, CSS. jQuery UI was used to make the list sortable via drag and drop.
 
